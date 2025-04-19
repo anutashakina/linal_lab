@@ -58,6 +58,17 @@ class Matrix:
         return other.rows == self.rows and other.columns == self.columns and other.data == self.data\
                and other.indexes == self.indexes and other.ptr_to_first == self.ptr_to_first
 
+# транспонирование матрицы
+def transpose(matrix: Matrix) -> Matrix:
+    transposed_data = []
+
+    for row in range(1, matrix.rows + 1):
+        for col in range(1, matrix.columns + 1):
+            val = matrix.get(row, col)
+            if val != 0:
+                transposed_data.append((col - 1, row - 1, val))
+
+    return Matrix(matrix.columns, matrix.rows, transposed_data)
 
 # ввод матрицы с клавиатуры
 def get_csr_matrix_from_input(is_square=False) -> Matrix:
