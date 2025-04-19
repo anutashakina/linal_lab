@@ -169,3 +169,20 @@ def get_determinant(matrix: list[list[float]]) -> float:
 # проверка на наличие обратной матрицы
 def check_inverse(determinant: float) -> bool:
     return bool(determinant)
+
+
+def save_matrix(classic_matrix: list[list[float]]) -> Matrix:
+    if not classic_matrix:
+        return Matrix(0, 0, [])
+
+    rows = len(classic_matrix)
+    cols = len(classic_matrix[0]) if rows > 0 else 0
+
+    data = []
+    for row in range(rows):
+        for col in range(cols):
+            value = classic_matrix[row][col]
+            if value != 0:
+                data.append((row, col, float(value)))  # Индексы с 0!
+
+    return Matrix(rows, cols, data)
