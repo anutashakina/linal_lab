@@ -140,3 +140,32 @@ def multiply(a: Matrix, b: Matrix) -> Matrix | None:
 
     # формируем матрицу-результат в формате CSR
     return Matrix(a.rows, b.columns, result)
+
+# при получении матрицы в формате CSR происходит перевод на стандартный get_geterminant
+def get_determinant_csr(matrix: Matrix) -> float:
+    standard_matrix: list[list[float]] = get_classic_format(matrix)
+    return get_determinant(standard_matrix)
+
+# подсчёт определителя для матрицы в стандартном виде
+def get_determinant(matrix: list[list[float]]) -> float:
+    # базовые значения определителей: 2*2, 1*1, пустое
+    if not matrix:
+        return 0
+    if len(matrix) == 1:
+        return matrix[0][0]
+    if len(matrix) == 2:
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+
+    determinant: int = 0
+    # используем разложение по строке, перебираем элементы первой строки
+    for c in range(len(matrix)):
+        # создаём матрицу для определения минора, дальше считаем по формуле разложения
+        minor: list[list[float]] = [row[:c] + row[c + 1:] for row in matrix[1:]]
+        determinant += (-1) ** c * matrix[0][c] * get_determinant(minor)
+
+    return determinant
+
+
+# проверка на наличие обратной матрицы
+def check_inverse(determinant: float) -> bool:
+    return bool(determinant)
