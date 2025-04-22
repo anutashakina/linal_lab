@@ -62,10 +62,10 @@ class Matrix:
 def transpose(matrix: Matrix) -> Matrix:
     transposed_data = []
 
-    for row in range(1, matrix.rows + 1):
-        for col in range(1, matrix.columns + 1):
+    for col in range(1, matrix.columns + 1):
+        for row in range(1, matrix.rows + 1):
             val = matrix.get(row, col)
-            if val != 0:
+            if abs(val) > 1e-10:
                 transposed_data.append((col - 1, row - 1, val))
 
     return Matrix(matrix.columns, matrix.rows, transposed_data)
